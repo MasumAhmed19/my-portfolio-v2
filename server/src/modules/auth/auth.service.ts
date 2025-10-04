@@ -1,43 +1,44 @@
 import { User } from "@prisma/client";
+import { prisma } from "../../config/db";
+import AppError from "../../errorHelpers/AppError";
+import httpStatus  from "http-status-codes";
+import bcryptjs from "bcryptjs";
+import { createUserToken } from "../../utils/userToken";
 
-const credentialLogin = async (payload: Partial<User>) => {
+type CredentialPayload = { email: string; password: string };
+
+
+const credentialLogin = async (payload: CredentialPayload) => {
   const { email, password } = payload;
 
-//   const isUserExits = await User.findOne({ phone }).populate("wallet");
+  const admin = await prisma.user.findUnique({
+    where:{
+      email
+    }
+  });
 
-//   if (!isUserExits) {
-//     throw new AppError(
-//       httpStatus.BAD_REQUEST,
-//       "Phone number does not exits. Please Register Before Login"
-//     );
-//   }
+  if(!admin){
+    throw new AppError(httpStatus.UNAUTHORIZED, "Incorrect admin email");
+  }
+  // 411 --> Incorrect admin email
+  const isPasswordMatched = await bcryptjs.compare(password as string, admin.password)
 
-//   const isPasswordMatched = await bcryptjs.compare(
-//     password as string,
-//     isUserExits.password
-//   );
 
-//   if (!isPasswordMatched) {
-//     throw new AppError(httpStatus.BAD_REQUEST, "Incorrect Password");
-//   }
+  if (!isPasswordMatched) {
+    throw new AppError(httpStatus.UNAUTHORIZED, "Incorrect Password");   // 412 --> Incorrect admin pass
+  }
 
-//   const userToken = createUserToken(isUserExits);
+  const userToken = createUserToken(admin);
+  const { password: _, ...res } = admin;
 
-//   // delete isUserExit.password;
-//   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-//   const { password: pass, ...res } = isUserExits.toObject();
-
-//   return {
-//     accessToken: userToken.accessToken,
-//     refreshToken: userToken.refreshToken,
-//     user: res,
-//   };
+  return {
+    accessToken: userToken.accessToken,
+    refreshToken: userToken.refreshToken,
+    user: res,
+  };
 };
-
-
 
 
 export const AuthServices = {
   credentialLogin,
-
 };

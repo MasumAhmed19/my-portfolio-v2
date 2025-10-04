@@ -4,7 +4,8 @@ import { AuthControllers } from "./auth.controller";
 
 const router = Router();
 
-router.post('/mas-login', AuthControllers.credentialLogin)
+router.post('/admin-login', AuthControllers.credentialLogin)
+router.post('/logout', AuthControllers.logout)
 
 
 export const AuthRoutes = router;

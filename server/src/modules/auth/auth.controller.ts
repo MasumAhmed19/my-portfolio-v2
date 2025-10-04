@@ -9,8 +9,6 @@ import httpStatus from 'http-status-codes'
 const credentialLogin = catchAsync(async (req: Request, res: Response) => {
   const user = await AuthServices.credentialLogin(req.body);
 
-  setAuthCookie(res, user);
-
   sendResponse(res, {
     success: true,
     statusCode: httpStatus.OK,
@@ -20,6 +18,19 @@ const credentialLogin = catchAsync(async (req: Request, res: Response) => {
 });
 
 
+const logout = catchAsync(async (req: Request, res: Response) => {
+  // cookie use krle, clearCookie dite hbe
+  sendResponse(res, {
+    success: true,
+    statusCode: httpStatus.OK,
+    message: "Logout successful. Please remove tokens client-side.",
+    data: null
+  });
+});
+
+
+
 export const AuthControllers = {
   credentialLogin,
+  logout
 };
