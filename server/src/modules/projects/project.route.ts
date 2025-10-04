@@ -13,7 +13,4 @@ router.patch('/:slug', checkAuth(Role.ADMIN), ProjectController.updateProject)
 router.delete('/:slug', checkAuth(Role.ADMIN), ProjectController.deleteProject)
 
 
-
-
-
 export const ProjectRoutes = router

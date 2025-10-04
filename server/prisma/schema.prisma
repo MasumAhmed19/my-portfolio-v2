@@ -47,12 +47,14 @@ model Projects {
 model Experience {
   id          Int      @id @default(autoincrement())
   title       String
-  slug        String   @unique
+  companyName String
+  jobType     String // intern remote 
   description String
   tags        String[]
   images      String[]
+  startDate   String
+  EndDate     String
   isFeatured  Boolean  @default(false)
-  views       Int      @default(0)
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
@@ -65,6 +67,7 @@ model Posts {
   title       String
   slug        String   @unique
   description String
+  content     Json
   tags        String[]
   images      String[]
   isFeatured  Boolean  @default(false)
