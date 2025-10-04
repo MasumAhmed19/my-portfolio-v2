@@ -14,18 +14,29 @@ enum Role {
 }
 
 model User {
-  id          Int          @id @default(autoincrement())
-  name        String
-  email       String       @unique
-  password    String // hashed password
-  avatar      String? // profile image
-  createdAt   DateTime     @default(now())
-  updatedAt   DateTime     @updatedAt
-  role        Role         @default(USER)
-  posts       Posts[]
-  projects    Projects[]
-  experiences Experience[]
-  Comment     Comment[]
+  id       Int     @id @default(autoincrement())
+  name     String
+  email    String  @unique
+  password String // hashed password
+  avatar   String? // profile image
+  about    String? // short bio/about section
+  website  String? // personal portfolio URL
+  github   String? // GitHub profile
+  linkedin String? // LinkedIn profile
+  twitter  String? // Twitter profile (optional)
+  facebook String? // Twitter profile (optional)
+  phone    String? // contact number
+  location String? // city, country
+
+  skills   Json? // store as JSON array of objects
+  projects Projects[]
+  posts    Posts[]
+  Experience Experience[]
+  Comment  Comment[]
+
+  createdAt  DateTime     @default(now())
+  updatedAt  DateTime     @updatedAt
+  role       Role         @default(USER)
 }
 
 model Projects {
