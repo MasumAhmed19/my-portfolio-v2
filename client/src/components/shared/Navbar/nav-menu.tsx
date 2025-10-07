@@ -1,3 +1,5 @@
+"use client";
+
 import {
   NavigationMenu,
   NavigationMenuItem,
@@ -5,31 +7,59 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import { NavigationMenuProps } from "@radix-ui/react-navigation-menu";
+import { cn } from "@/lib/utils";
 import Link from "next/link";
 
-export const NavMenu = (props: NavigationMenuProps) => (
-  <NavigationMenu {...props}>
-    <NavigationMenuList className="gap-6 space-x-0 data-[orientation=vertical]:flex-col data-[orientation=vertical]:items-start font-medium">
-      <NavigationMenuItem>
-        <NavigationMenuLink asChild>
-          <Link href="/">Home</Link>
-        </NavigationMenuLink>
-      </NavigationMenuItem>
-      <NavigationMenuItem>
-        <NavigationMenuLink asChild>
-          <Link href="/blogs">Blogs</Link>
-        </NavigationMenuLink>
-      </NavigationMenuItem>
-      <NavigationMenuItem>
-        <NavigationMenuLink asChild>
-          <Link href="/about">About</Link>
-        </NavigationMenuLink>
-      </NavigationMenuItem>
-      <NavigationMenuItem>
-        <NavigationMenuLink asChild>
-          <Link href="/dashboard">dashboard</Link>
-        </NavigationMenuLink>
-      </NavigationMenuItem>
-    </NavigationMenuList>
-  </NavigationMenu>
-);
+interface NavMenuProps extends NavigationMenuProps {
+  isAuthenticated?: boolean;
+  orientation?: "horizontal" | "vertical";
+}
+
+const navLinks = [
+  { name: "Home", href: "/", protected: false },
+  { name: "About", href: "/about", protected: false },
+  { name: "Blogs", href: "/blogs", protected: false },
+  { name: "Projects", href: "/projects", protected: false },
+  { name: "Contact", href: "/contact", protected: false },
+  { name: "Dashboard", href: "/dashboard", protected: true },
+];
+
+export const NavMenu = ({ 
+  isAuthenticated = false, 
+  orientation = "horizontal",
+  className,
+  ...props 
+}: NavMenuProps) => {
+  const isVertical = orientation === "vertical";
+  
+  return (
+    <NavigationMenu orientation={orientation} className={className} {...props}>
+      <NavigationMenuList className={cn(
+        "font-medium",
+        isVertical 
+          ? "flex-col items-start space-y-1 w-full" 
+          : "gap-6 space-x-0"
+      )}>
+        {navLinks
+          .filter((link) => !link.protected || isAuthenticated)
+          .map((link) => (
+            <NavigationMenuItem 
+              key={link.href} 
+              className={cn(isVertical && "w-full")}
+            >
+              <NavigationMenuLink asChild>
+                <Link 
+                  href={link.href}
+                  className={cn(
+                    isVertical && "block w-full py-3 px-4 rounded-md hover:bg-accent transition-colors text-base"
+                  )}
+                >
+                  {link.name}
+                </Link>
+              </NavigationMenuLink>
+            </NavigationMenuItem>
+          ))}
+      </NavigationMenuList>
+    </NavigationMenu>
+  );
+};
