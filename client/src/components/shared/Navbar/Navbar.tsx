@@ -1,5 +1,4 @@
 "use client";
-import { Button } from "@/components/ui/button";
 import { ModeToggle } from "@/components/ui/mode-toggle";
 
 import Link from "next/link";
@@ -9,7 +8,7 @@ import { NavigationSheet } from "./navigation-sheet";
 
 const Navbar = () => {
   return (
-    <nav className="fixed top-6 inset-x-4 h-16 max-w-4xl mx-auto rounded-full bg-background border dark:border-slate-700/70 z-30">
+    <nav className="fixed top-6 inset-x-4 h-16 max-w-7xl mx-auto rounded-full bg-background border dark:border-slate-700/70 z-30">
       <div className="flex h-full items-center justify-between px-6 md:px-8">
         {/* Logo with consistent padding */}
         <Link href="/" className="flex-shrink-0 ">

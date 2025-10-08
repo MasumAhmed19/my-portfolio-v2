@@ -8,8 +8,10 @@ export default function HomePage() {
         <Hero />
       </section>
 
-      <section className="max-w-4xl mx-auto px-4 py-[10vh]">
-        <FeaturedProjects />
+      <section className="bg-secondary/30 " >
+        <div className="max-w-7xl mx-auto px-4 pb-[10vh] ">
+          <FeaturedProjects />
+        </div>
       </section>
 
     </div>

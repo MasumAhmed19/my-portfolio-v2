@@ -28,15 +28,15 @@ model User {
   phone    String? // contact number
   location String? // city, country
 
-  skills   Json? // store as JSON array of objects
-  projects Projects[]
-  posts    Posts[]
+  skills     Json? // store as JSON array of objects
+  projects   Projects[]
+  posts      Posts[]
   Experience Experience[]
-  Comment  Comment[]
+  Comment    Comment[]
 
-  createdAt  DateTime     @default(now())
-  updatedAt  DateTime     @updatedAt
-  role       Role         @default(USER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  role      Role     @default(USER)
 }
 
 model Projects {
@@ -46,8 +46,11 @@ model Projects {
   description String
   tags        String[]
   images      String[]
+  video       String?
   isFeatured  Boolean  @default(false)
   views       Int      @default(0)
+  liveLink    String?
+  githubLink  String?
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 
