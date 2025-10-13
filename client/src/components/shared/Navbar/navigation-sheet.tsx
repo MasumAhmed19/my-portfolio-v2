@@ -1,10 +1,9 @@
 import { Button } from "@/components/ui/button";
-import { 
-  Sheet, 
-  SheetContent, 
-  SheetTrigger, 
+import {
+  Sheet,
+  SheetContent,
+  SheetTrigger,
   SheetHeader,
-  SheetTitle 
 } from "@/components/ui/sheet";
 import { Menu } from "lucide-react";
 import { NavMenu } from "./nav-menu";
@@ -14,9 +13,9 @@ export const NavigationSheet = () => {
   return (
     <Sheet>
       <SheetTrigger asChild>
-        <Button 
-          variant="outline" 
-          size="icon" 
+        <Button
+          variant="outline"
+          size="icon"
           className="rounded-full h-9 w-9"
           aria-label="Open navigation menu"
         >
@@ -29,15 +28,12 @@ export const NavigationSheet = () => {
             <Logo />
           </div>
         </SheetHeader>
-        
+
         <div className="flex flex-col h-full px-6 py-4">
           <div className="flex-1">
-            <NavMenu 
-              orientation="vertical" 
-              className="mt-8 w-full" 
-            />
+            <NavMenu orientation="vertical" className="mt-8 w-full" />
           </div>
-          
+
           {/* Optional footer content */}
           <div className="mt-auto pt-6 border-t border-border">
             <p className="text-xs text-muted-foreground text-center">

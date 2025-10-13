@@ -1,5 +1,6 @@
 import SocialLink from "@/components/shared/SocialLink";
 import { Github, Linkedin, Twitter } from "lucide-react";
+import Image from "next/image";
 
 const Hero = () => {
   return (
@@ -9,12 +10,14 @@ const Hero = () => {
           {/* Heading */}
           <div className="text-2xl sm:text-3xl md:text-5xl leading-tight sm:leading-snug md:leading-tight font-light text-foreground">
             <div className="flex flex-col sm:flex-row items-center justify-center gap-2 sm:gap-3 mb-2">
-              <span className="text-foreground">Hi, I'm</span>
+              <span className="text-foreground">Hi, I am </span>
 
               <div className="relative group">
-                <img
+                <Image
                   src="https://i.ibb.co.com/KjN8t2q7/bw.jpg"
                   alt="Masum Ahmed"
+                  width={180}
+                  height={180}
                   className="w-52 md:w-16 rounded-full md:border border-gray-400 transition-transform duration-300"
                 />
               </div>
@@ -24,9 +27,7 @@ const Hero = () => {
               </span>
             </div>
 
-            <span className="text-foreground">
-              A Junior{" "}
-            </span>
+            <span className="text-foreground">A Junior</span>
 
             <span className="text-primary font-semibold">
               Fullstack Developer
@@ -34,18 +35,18 @@ const Hero = () => {
           </div>
 
           {/* Bio */}
-          <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl leading-relaxed px-2 sm:px-0">
-            I specialize in modern{" "}
-            <span className="text-primary font-medium">Fullstack</span>{" "}
-            technologies and comfortable working with the{" "}
-            <span className="text-primary font-medium">MERN stack</span>. I
+          <p className="text-muted-foreground text-sm sm:text-base md:text-lg max-w-2xl space-x-1 leading-relaxed px-2 sm:px-0">
+            I specialize in modern 
+            <span className="text-primary font-medium pl-1">Fullstack</span>
+            technologies and comfortable working with the
+            <span className="text-primary font-medium  pl-1">MERN stack</span>. I
             enjoy solving complex problems and continuously learning new
-            technologies. Currently, I'm focusing on{" "}
-            <span className="text-primary font-medium">
+            technologies. Currently, I am focusing on
+            <span className="text-primary font-medium  pl-1">
               Artificial Intelligence (AI)
-            </span>{" "}
-            and advancing my skills as part of my{" "}
-            <span className="text-primary font-medium">
+            </span>
+            and advancing my skills as part of my
+            <span className="text-primary font-medium  pl-1">
               final-year undergraduate studies
             </span>
             .

@@ -66,6 +66,8 @@ model Experience {
   description String
   tags        String[]
   images      String[]
+  weblink     String?
+  linkedIn    String?
   startDate   String
   EndDate     String
   isFeatured  Boolean  @default(false)

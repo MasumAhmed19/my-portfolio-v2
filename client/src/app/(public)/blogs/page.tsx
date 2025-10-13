@@ -1,9 +1,21 @@
-const AllBlogsPage = () => {
-  return (
-    <div className="py-30 px-4 max-w-7xl mx-auto">
-      <h2 className="text-center text-4xl">All Blogs</h2>
-    </div>
-  );
-};
+import AllBlogs from '@/components/modules/Blogs/AllBlogs'
+import React from 'react'
 
-export default AllBlogsPage;
+interface PageProps {
+  searchParams: Promise<{
+    page?: string;
+    type?: "all" | "featured";
+  }>;
+}
+
+const AllBlogsPage = async ({ searchParams }: PageProps) => {
+  return (
+    <section className=''>
+      <div className='max-w-7xl mx-auto'>
+        <AllBlogs searchParams={searchParams} />
+      </div>
+    </section>
+  )
+}
+
+export default AllBlogsPage

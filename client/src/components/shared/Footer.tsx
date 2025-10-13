@@ -1,53 +1,56 @@
-import Link from "next/link";
+import { Github, Linkedin, Mail, Twitter } from "lucide-react";
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="relative w-full overflow-hidden pt-12 pb-10 ">
-      {/* Background Layer */}
-      <div
-        className="absolute inset-0 z-0"
-        style={{
-          background:
-            "radial-gradient(125% 125% at 50% 60%, #000000 40%, #010133 100%)",
-        }}
-      />
+    <footer className="relative w-full max-w-7xl mx-auto px-6 md:px-10 pt-8 pb-10">
+      {/* Top border */}
+      <div className="border-t border-foreground/30 mb-6"></div>
 
-      {/* Content Layer */}
-      <div className="relative z-10 container mx-auto px-6 sm:px-8 md:px-12 lg:px-20 xl:px-28 text-white">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
-          {/* Left */}
-          <div>
-            <h2 className="text-white text-xl font-semibold mb-1">
-              Next level™
-            </h2>
-            <p className="text-sm text-gray-400">Smart blog System</p>
-          </div>
+      {/* Footer content */}
+      <div className="flex flex-col md:flex-row items-center justify-between gap-6 text-center md:text-left">
+        {/* Left section */}
+        <p className="text-sm text-gray-400">
+          © {currentYear} <span className="font-medium text-gray-300">Masum Ahmed</span>. All rights reserved.
+        </p>
 
-          {/* Center Nav */}
-          <div className="flex flex-wrap justify-center md:justify-start space-x-6 text-sm">
-            <Link href="/" className="hover:text-white transition-colors">
-              Home
-            </Link>
-            <Link href="/events" className="hover:text-white transition-colors">
-              Events
-            </Link>
-            <Link href="/about" className="hover:text-white transition-colors">
-              About
-            </Link>
-            <Link
-              href="/contact"
-              className="hover:text-white transition-colors"
-            >
-              Contact
-            </Link>
-          </div>
-
-          {/* Right */}
-          <div className="text-sm text-gray-400">
-            © {currentYear} next level team. All rights reserved.
-          </div>
+        {/* Right section (social icons) */}
+        <div className="flex items-center gap-4 text-gray-400">
+          <a
+            href="https://github.com/MasumAhmed19"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="GitHub"
+            className="hover:text-white transition-colors"
+          >
+            <Github size={20} />
+          </a>
+          <a
+            href="https://www.linkedin.com/in/masum-ahmed-61b3b8294/"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="LinkedIn"
+            className="hover:text-white transition-colors"
+          >
+            <Linkedin size={20} />
+          </a>
+          <a
+            href="https://x.com/Masum_Ahmedd"
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label="Twitter"
+            className="hover:text-white transition-colors"
+          >
+            <Twitter size={20} />
+          </a>
+          <a
+            href="mailto:masum.ahmed1328@gmail.com"
+            aria-label="Email"
+            className="hover:text-white transition-colors"
+          >
+            <Mail size={20} />
+          </a>
         </div>
       </div>
     </footer>

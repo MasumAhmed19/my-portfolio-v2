@@ -1,5 +1,8 @@
 import Hero from "@/components/modules/Home/Hero";
-import FeaturedProjects from "@/components/modules/Home/Projects";
+import FeaturedProjects from "@/components/modules/Home/FeaturedProjects";
+import TechStack from "@/components/modules/Home/TechStack";
+import ExperienceSection from "@/components/modules/Home/ExperienceSection";
+import FeaturedBlog from "@/components/modules/Home/FeaturedBlog";
 
 export default function HomePage() {
   return (
@@ -14,6 +17,23 @@ export default function HomePage() {
         </div>
       </section>
 
+       <section className="" >
+        <div className="px-4 pb-[4vh]">
+          <ExperienceSection />
+        </div>
+      </section>
+
+      <section className="" >
+        <div className="px-4 pb-[4vh]">
+          <FeaturedBlog />
+        </div>
+      </section>
+
+      <section className="" >
+        <div className="px-4 pb-[10vh]">
+          <TechStack />
+        </div>
+      </section>
     </div>
   );
 }

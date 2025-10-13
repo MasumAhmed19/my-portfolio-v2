@@ -17,10 +17,9 @@ interface NavMenuProps extends NavigationMenuProps {
 
 const navLinks = [
   { name: "Home", href: "/", protected: false },
+  { name: "Projects", href: "/projects", protected: false },
   { name: "About", href: "/about", protected: false },
   { name: "Blogs", href: "/blogs", protected: false },
-  { name: "Projects", href: "/projects", protected: false },
-  { name: "Contact", href: "/contact", protected: false },
   { name: "Dashboard", href: "/dashboard", protected: true },
 ];
 

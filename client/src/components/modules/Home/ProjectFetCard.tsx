@@ -1,15 +1,15 @@
-'use client'
+"use client"
 
-import { IProject } from '@/types'
-import React from 'react'
-import Image from 'next/image'
-import Link from 'next/link'
-import VideoPlayer from '@/components/shared/VideoPlayer'
-import { cn } from '@/lib/utils'
+import { IProject } from "@/types";
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import VideoPlayer from "@/components/shared/VideoPlayer";
+import { cn } from "@/lib/utils";
 
 interface ProjectFetCardProps {
-  el: IProject
-  index: number
+  el: IProject;
+  index: number;
 }
 
 const ProjectFetCard = ({ el, index }: ProjectFetCardProps) => {
@@ -18,13 +18,14 @@ const ProjectFetCard = ({ el, index }: ProjectFetCardProps) => {
       <div className="px-5 md:px-0">
         {/* Media Section - Clickable */}
         <div className="mb-5 relative overflow-hidden rounded-lg cursor-pointer">
-          <Link href={`/projects/`} className="block relative w-full transition-transform duration-300 group-hover:scale-[1.02]">
+          {/* <Link href={`/projects/`} className="block relative w-full transition-transform duration-300 group-hover:scale-[1.02]"> */}
+          <div className="block relative w-full transition-transform duration-300 group-hover:scale-[1.02]">
             {el.video ? (
-              <VideoPlayer 
-                src={el.video} 
-                autoPlay 
-                loop 
-                muted 
+              <VideoPlayer
+                src={el.video}
+                autoPlay
+                loop
+                muted
                 playbackRate={1.25}
                 className="w-full h-auto rounded-lg shadow-lg"
                 disableFallback
@@ -40,22 +41,22 @@ const ProjectFetCard = ({ el, index }: ProjectFetCardProps) => {
             )}
             {/* Hover Overlay */}
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 rounded-lg pointer-events-none" />
-          </Link>
+          </div>
         </div>
 
         {/* Content Section */}
         <div className="space-y-4 text-center md:text-left">
           {/* Title + Links */}
           <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-            <Link href={`/projects/`}>
-              <h3 className="text-2xl font-medium text-foreground group-hover:text-muted-foreground transition-colors cursor-pointer">
+            <div>
+              <h3 className="text-2xl font-medium text-foreground group-hover:text-muted-foreground transition-colors">
                 {el.title}
               </h3>
-            </Link>
+            </div>
 
             <div className="flex flex-wrap justify-center md:justify-end items-center gap-4">
               {el.liveLink && (
-                <Link 
+                <Link
                   href={el.liveLink}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -66,7 +67,7 @@ const ProjectFetCard = ({ el, index }: ProjectFetCardProps) => {
                 </Link>
               )}
               {el.githubLink && (
-                <Link 
+                <Link
                   href={el.githubLink}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -83,7 +84,7 @@ const ProjectFetCard = ({ el, index }: ProjectFetCardProps) => {
           {el.tags && el.tags.length > 0 && (
             <div className="flex flex-wrap justify-center md:justify-start gap-2">
               {el.tags.map((tag, idx) => (
-                <span 
+                <span
                   key={idx}
                   className="text-xs px-3 py-1 bg-primary/40 text-secondary-foreground rounded-full capitalize"
                 >
@@ -95,7 +96,7 @@ const ProjectFetCard = ({ el, index }: ProjectFetCardProps) => {
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ProjectFetCard
+export default ProjectFetCard;
