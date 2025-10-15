@@ -7,17 +7,20 @@ import notFound from "./middlewares/notFound";
 
 const app = express();
 
-// Middleware
-app.use(cors()); // Enables Cross-Origin Resource Sharing
-app.use(compression()); // Compresses response bodies for faster delivery
-app.use(express.json()); // Parse incoming JSON requests
-
 app.use(
   cors({
     origin: ["http://localhost:3000", "https://masum-a-shanto.vercel.app"],
     credentials: true,
+    allowedHeaders: ["Content-Type", "Authorization"],
   })
 );
+
+
+// Middleware
+app.use(compression()); // Compresses response bodies for faster delivery
+app.use(express.json()); // Parse incoming JSON requests
+app.use(express.urlencoded({ extended: true })); // Parse URL-encoded bodies
+
 
 app.use('/api/v1', router)
 

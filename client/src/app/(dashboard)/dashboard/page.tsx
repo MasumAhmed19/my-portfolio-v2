@@ -1,9 +1,17 @@
-const DashboardHomePage = () => {
-  return (
-    <div>
-      <h1>Dashboard Home Page</h1>
-    </div>
-  );
-};
+// app/dashboard/page.tsx
+import { SectionCards } from "@/components/section-cards"
+import { ChartAreaInteractive } from "@/components/chart-area-interactive"
+import { DataTable } from "@/components/data-table"
+import data from "./data.json"
 
-export default DashboardHomePage;
+export default function DashboardPage() {
+  return (
+    <>
+      <SectionCards />
+      <div className="px-4 lg:px-6">
+        <ChartAreaInteractive />
+      </div>
+      <DataTable data={data} />
+    </>
+  )
+}

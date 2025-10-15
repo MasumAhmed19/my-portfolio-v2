@@ -1,10 +1,10 @@
 "use client";
 
-import { EditorContent, useEditor } from "@tiptap/react";
+import { EditorContent, JSONContent, useEditor } from "@tiptap/react";
 import StarterKit from "@tiptap/starter-kit";
 
 interface JsonbRendererProps {
-  content: any;
+  content: JSONContent;
 }
 
 export default function JsonbRenderer({ content }: JsonbRendererProps) {

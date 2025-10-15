@@ -9,6 +9,7 @@ import {
 import { NavigationMenuProps } from "@radix-ui/react-navigation-menu";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
+import { useSession } from "next-auth/react";
 
 interface NavMenuProps extends NavigationMenuProps {
   isAuthenticated?: boolean;
@@ -24,12 +25,14 @@ const navLinks = [
 ];
 
 export const NavMenu = ({ 
-  isAuthenticated = false, 
   orientation = "horizontal",
   className,
   ...props 
 }: NavMenuProps) => {
   const isVertical = orientation === "vertical";
+  const { data: session, status } = useSession();
+  
+  const isAdmin = status === "authenticated" && session?.user?.role === "ADMIN";
   
   return (
     <NavigationMenu orientation={orientation} className={className} {...props}>
@@ -40,7 +43,7 @@ export const NavMenu = ({
           : "gap-6 space-x-0"
       )}>
         {navLinks
-          .filter((link) => !link.protected || isAuthenticated)
+          .filter((link) => !link.protected || isAdmin) 
           .map((link) => (
             <NavigationMenuItem 
               key={link.href} 

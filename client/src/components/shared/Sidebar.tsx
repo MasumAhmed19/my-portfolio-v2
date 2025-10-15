@@ -3,11 +3,37 @@
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Home, PlusCircle, LogOut } from "lucide-react";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import { signOut } from "next-auth/react"; 
 
 export default function Sidebar() {
+  const router = useRouter();
+
+  const handleLogout = async () => {
+    try {
+      toast.loading("Logging out...");
+
+      await signOut({
+        redirect: false, 
+      });
+
+      toast.dismiss();
+      toast.success("Logged out successfully!");
+
+      setTimeout(() => {
+        router.push("/"); 
+      }, 500);
+    } catch (error) {
+      toast.dismiss();
+      toast.error("Logout failed. Please try again.");
+      console.error("Logout error:", error);
+    }
+  };
+
   return (
     <aside className="flex h-screen w-64 flex-col border-r bg-black text-white">
-      {/* Top navigation */}
+      {/* Navigation */}
       <nav className="flex-1 space-y-2 p-4">
         <Link
           href="/"
@@ -26,14 +52,12 @@ export default function Sidebar() {
         </Link>
       </nav>
 
-      {/* Bottom action */}
+      {/* Logout */}
       <div className="p-4 border-t border-gray-500">
         <Button
           variant="destructive"
           className="w-full justify-start gap-2 cursor-pointer"
-          onClick={() => {
-            console.log("Logout clicked");
-          }}
+          onClick={handleLogout}
         >
           <LogOut className="h-4 w-4" />
           Logout

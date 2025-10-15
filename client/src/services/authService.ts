@@ -3,13 +3,19 @@ import apiClient from "@/lib/apiClient";
 import { API_ENDPOINTS } from "@/lib/constants";
 import { handleApiError } from "@/lib/helpers";
 
-export const loginAdmin = async (payload: { email: string; password: string }) => {
+export const loginAdmin = async (payload: {
+  email: string;
+  password: string;
+}) => {
   try {
-    const { data } = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, payload);
-    if (typeof window !== "undefined") {
-      localStorage.setItem("accessToken", data.accessToken);
+    const response = await apiClient.post(API_ENDPOINTS.AUTH.LOGIN, payload);
+    const { accessToken } = response.data.data;
+
+    if (accessToken) {
+      localStorage.setItem("accessToken", accessToken);
+      console.log("✅ Login successful - Token saved");
     }
-    return data;
+    return response.data;
   } catch (error) {
     handleApiError(error);
   }
@@ -20,10 +26,10 @@ export const getMe = async () => {
     const { data } = await apiClient.get(API_ENDPOINTS.AUTH.ME);
     return data;
   } catch (error) {
+    console.log("heee");
     handleApiError(error);
   }
 };
-
 
 export const updateProfile = async (payload: any) => {
   try {
@@ -32,4 +38,10 @@ export const updateProfile = async (payload: any) => {
   } catch (error) {
     handleApiError(error);
   }
+};
+
+// Helper function to logout
+export const logout = () => {
+  localStorage.removeItem("accessToken");
+  sessionStorage.clear();
 };
