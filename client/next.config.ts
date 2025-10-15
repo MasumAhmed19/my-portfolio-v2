@@ -23,6 +23,10 @@ const nextConfig: NextConfig = {
         protocol: 'https',
         hostname: 'ui.shadcn.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'img.freepik.com',
+      },
     ],
   },
   // Force dynamic rendering to avoid build timeouts

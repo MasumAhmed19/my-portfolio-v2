@@ -1,4 +1,3 @@
-// AllBlogs.tsx
 import { getBlogs } from "@/services/blogService";
 import BlogCard from "./BlogCard";
 import BlogTabs from "./BlogTabs";

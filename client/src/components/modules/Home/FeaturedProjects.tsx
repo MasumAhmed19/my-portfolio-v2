@@ -1,8 +1,8 @@
-import { getProjects } from "@/services/projectService";
+import { getFeaturedProjects, getProjects } from "@/services/projectService";
 import ProjectFetCard from "./ProjectFetCard";
 
 export default async function FeaturedProjects() {
-  const projects = await getProjects();
+  const projects = await getFeaturedProjects();
 
   if (!projects.length) {
     return <div className="text-center py-10">No projects available</div>;

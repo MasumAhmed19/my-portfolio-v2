@@ -1,28 +1,27 @@
-"use client"
+"use client";
 
-import * as React from "react"
+import * as React from "react";
 import {
   IconCamera,
   IconChartBar,
   IconDashboard,
-  IconDatabase,
   IconFileAi,
   IconFileDescription,
-  IconFileWord,
-  IconFolder,
+  IconFilePlus,
+  IconFileText,
   IconHelp,
-  IconInnerShadowTop,
+  IconHome,
   IconListDetails,
+  IconPlus,
   IconReport,
   IconSearch,
   IconSettings,
-  IconUsers,
-} from "@tabler/icons-react"
+  IconUser,
+} from "@tabler/icons-react";
 
-import { NavDocuments } from "@/components/nav-documents"
-import { NavMain } from "@/components/nav-main"
-import { NavSecondary } from "@/components/nav-secondary"
-import { NavUser } from "@/components/nav-user"
+import { NavDocuments } from "@/components/nav-documents";
+import { NavMain } from "@/components/nav-main";
+import { NavUser } from "@/components/nav-user";
 import {
   Sidebar,
   SidebarContent,
@@ -31,39 +30,43 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
-} from "@/components/ui/sidebar"
+} from "@/components/ui/sidebar";
+import Link from "next/link";
+import {  LogOutIcon } from "lucide-react";
+import { toast } from "sonner";
+import { signOut } from "next-auth/react";
 
 const data = {
   user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
+    name: "Masum Ahmed",
+    email: "masum.ahmed1328@gmail.com",
+    avatar: "https://i.ibb.co.com/KjN8t2q7/bw.jpg",
   },
   navMain: [
     {
-      title: "Dashboard",
-      url: "#",
+      title: "Quick Action",
+      url: "/dashboard",
       icon: IconDashboard,
     },
     {
-      title: "Lifecycle",
-      url: "#",
+      title: "All Blog",
+      url: "/dashboard/all-blogs",
       icon: IconListDetails,
     },
     {
-      title: "Analytics",
-      url: "#",
+      title: "Create Blog",
+      url: "/dashboard/create-blog",
+      icon: IconFilePlus,
+    },
+    {
+      title: "All Project",
+      url: "/dashboard/all-projects",
       icon: IconChartBar,
     },
     {
-      title: "Projects",
-      url: "#",
-      icon: IconFolder,
-    },
-    {
-      title: "Team",
-      url: "#",
-      icon: IconUsers,
+      title: "Create Project",
+      url: "/dashboard/create-project",
+      icon: IconPlus,
     },
   ],
   navClouds: [
@@ -131,26 +134,40 @@ const data = {
       icon: IconSearch,
     },
   ],
-  documents: [
+  mainSiteNav: [
     {
-      name: "Data Library",
-      url: "#",
-      icon: IconDatabase,
+      name: "Home",
+      url: "/",
+      icon: IconHome, // better than Database for "Home"
     },
     {
-      name: "Reports",
-      url: "#",
-      icon: IconReport,
+      name: "Projects",
+      url: "/projects",
+      icon: IconReport, // FileReport or Clipboard could also work
     },
     {
-      name: "Word Assistant",
-      url: "#",
-      icon: IconFileWord,
+      name: "Blogs",
+      url: "/blogs",
+      icon: IconFileText, // FileText is perfect for blogs/articles
+    },
+    {
+      name: "About",
+      url: "/about",
+      icon: IconUser, // User icon makes sense for "About"
     },
   ],
-}
+};
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  
+  const handleLogout = async () => {
+    toast.loading("Logging out...");
+    await signOut({ redirect: false });
+    toast.dismiss();
+    toast.success("Logged out successfully!");
+    window.location.href = "/";
+  };
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
@@ -160,22 +177,28 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
               asChild
               className="data-[slot=sidebar-menu-button]:!p-1.5"
             >
-              <a href="#">
-                <IconInnerShadowTop className="!size-5" />
-                <span className="text-base font-semibold">Acme Inc.</span>
-              </a>
+              <Link href="/dashboard">
+                <span className="text-base font-semibold">
+                  Masum's Dashboard
+                </span>
+              </Link>
             </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
       <SidebarContent>
         <NavMain items={data.navMain} />
-        <NavDocuments items={data.documents} />
-        <NavSecondary items={data.navSecondary} className="mt-auto" />
+        <NavDocuments items={data.mainSiteNav} />
+        {/* <NavSecondary items={data.navSecondary} className="mt-auto" /> */}
+        <div className="mt-auto">
+          <button onClick={handleLogout} className="flex items-center gap-2 pl-4 cursor-pointer  py-2">
+            <LogOutIcon size={20} /> <span className="text-sm">Logout</span>
+          </button>
+        </div>
       </SidebarContent>
       <SidebarFooter>
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>
-  )
+  );
 }

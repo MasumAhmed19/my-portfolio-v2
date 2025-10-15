@@ -34,12 +34,12 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
       {/* Header */}
       <header className="mb-8 border-b border-border pb-8">
         {/* Title */}
-        <h1 className="text-4xl sm:text-5xl font-bold text-foreground mb-4 leading-tight">
+        <h1 className="text-3xl sm:text-4xl font-bold text-foreground mb-4 leading-tight">
           {blog.title}
         </h1>
 
         {/* Description */}
-        <p className="text-xl text-muted-foreground mb-6 leading-relaxed">
+        <p className="text-md text-muted-foreground mb-6 leading-relaxed">
           {blog.description}
         </p>
 

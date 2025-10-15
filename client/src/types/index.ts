@@ -1,20 +1,18 @@
 export interface IProject {
-  id?: number;
+  id: number;
   title: string;
-  video: string;
-  description: string;
   slug: string;
+  description: string;
   tags: string[];
   images: string[];
+  video?: string | null;
   isFeatured: boolean;
   views: number;
-  authorId: number;
-  liveLink?: string;
-  githubLink?: string;
+  liveLink?: string | null;
+  githubLink?: string | null;
   createdAt: Date;
   updatedAt: Date;
 }
-
 export interface Skill {
   name: string;
   icon: string;
@@ -38,16 +36,16 @@ export interface IExperiece {
 }
 
 
-export interface IBlog{
-  id:number
-  title:string
-  slug:string
-  description:string
-  content:JSON
-  tags:string[]
-  images:string[]
-  isFeatured:boolean
-  views:number
+export interface IBlog {
+  id: number;
+  title: string;
+  slug: string;
+  description: string;
+  content: JSON;
+  tags: string[];
+  images: string[];
+  isFeatured: boolean;
+  views: number;
   createdAt: Date;
   updatedAt: Date;
 }

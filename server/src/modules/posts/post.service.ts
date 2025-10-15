@@ -10,6 +10,11 @@ const createPost = async (payload: Prisma.PostsCreateInput): Promise<Posts> => {
     throw new AppError(httpStatus.BAD_REQUEST, "Content is required");
   }
 
+    // Validate content is proper JSON (optional but recommended)
+  if (typeof content !== 'object' || content === null || !('type' in content)) {
+    throw new AppError(httpStatus.BAD_REQUEST, "Invalid content format");
+  }
+
   let generatedSlug = generateSlug(title);
   let count = 0;
   let uniqueSlug = generatedSlug;
