@@ -8,6 +8,15 @@ interface PageProps {
   }>;
 }
 
+export const revalidate = 60; 
+
+
+export const metadata = {
+  title: "All Blogs | Masum’s Portfolio",
+  description: "Browse all my latest tech blogs and insights on web development.",
+};
+
+
 const AllBlogsPage = async ({ searchParams }: PageProps) => {
   return (
     <section className=''>

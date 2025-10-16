@@ -5,7 +5,7 @@ import React from "react";
 export const dynamic = "force-dynamic";
 
 const EditProject = async ({ params }: { params: { slug: string } }) => {
-  const { slug } = params;
+  const { slug } = await params;
   const response = await getSingleProject(slug);
   const project = response;
 

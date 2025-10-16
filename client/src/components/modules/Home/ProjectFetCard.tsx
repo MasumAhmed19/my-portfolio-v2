@@ -16,10 +16,8 @@ const ProjectFetCard = ({ el, index }: ProjectFetCardProps) => {
   return (
     <div className={cn("w-full mx-auto group", index % 2 === 1 && "pt-10")}>
       <div className="px-5 md:px-0">
-        {/* Media Section - Clickable */}
         <div className="mb-5 relative overflow-hidden rounded-lg cursor-pointer">
-          {/* <Link href={`/projects/`} className="block relative w-full transition-transform duration-300 group-hover:scale-[1.02]"> */}
-          <div className="block relative w-full transition-transform duration-300 group-hover:scale-[1.02]">
+          <Link href={`/projects/${el.slug}`} className="block relative w-full transition-transform duration-300 group-hover:scale-[1.02]">
             {el.video ? (
               <VideoPlayer
                 src={el.video}
@@ -36,12 +34,13 @@ const ProjectFetCard = ({ el, index }: ProjectFetCardProps) => {
                 alt={el.title}
                 width={800}
                 height={500}
+                loading="lazy"
                 className="w-full h-auto rounded-lg shadow-lg"
               />
             )}
             {/* Hover Overlay */}
             <div className="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-300 rounded-lg pointer-events-none" />
-          </div>
+          </Link>
         </div>
 
         {/* Content Section */}

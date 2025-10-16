@@ -92,6 +92,20 @@ export async function getProjects({
   }
 }
 
+export async function getAllProjectSlugs(): Promise<string[]> {
+  try {
+    const response = await fetch(
+      `${process.env.NEXT_PUBLIC_BASE_URL}/project?limit=1000`,
+      { next: { revalidate: 3600 } }
+    );
+    const data = await response.json();
+    return data.data.map((p: { slug: string }) => p.slug);
+  } catch (error) {
+    console.error("Failed to fetch project slugs:", error);
+    return [];
+  }
+}
+
 export async function getSingleProject(
   slug: string
 ): Promise<IProject | null> {

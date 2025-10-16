@@ -42,7 +42,7 @@ export async function getBlogs({
       `${process.env.NEXT_PUBLIC_BASE_URL}/post/?${params.toString()}`,
       {
         signal: controller.signal,
-        next: { revalidate: 60 }, // cache for 1 hour
+        next: { revalidate: 60 }, 
       }
     );
 
