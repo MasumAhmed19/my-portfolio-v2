@@ -30,8 +30,8 @@ export default function MenuBar({ editor }: MenuBarProps) {
 
   const addImage = () => {
     const url = window.prompt("Enter image URL:");
-    if (url) {
-      editor.chain().focus().setImage({ src: url }).run();
+    if (url && editor) {
+      editor.commands.insertContent(`<img src="${url}" alt="image" />`);
     }
   };
 

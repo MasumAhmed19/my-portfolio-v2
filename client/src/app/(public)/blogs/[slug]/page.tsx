@@ -4,7 +4,6 @@ import React from "react";
 import { Calendar, Eye, Tag } from "lucide-react";
 import JsonbRenderer from "@/components/shared/JsonbRenderer";
 
-// Force dynamic rendering
 export const dynamic = "force-dynamic";
 
 const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
@@ -43,43 +42,46 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
           {blog.description}
         </p>
 
-        {/* Meta Information */}
-        <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Calendar className="w-4 h-4" />
-            <time dateTime={new Date(blog.createdAt).toISOString()}>
-              {formatDate(blog.createdAt.toString())}
-            </time>
+        <div className="flex items-center gap-4">
+          {/* Meta Information */}
+          <div className="flex flex-wrap items-center gap-4 text-sm text-muted-foreground">
+            <div className="flex items-center gap-2">
+              <Calendar className="w-4 h-4" />
+              <time dateTime={new Date(blog.createdAt).toISOString()}>
+                {formatDate(blog.createdAt.toString())}
+              </time>
+            </div>
+            <div className="flex items-center gap-2">
+              <Eye className="w-4 h-4" />
+              <span>{blog.views} views</span>
+            </div>
+            {blog.isFeatured && (
+              <span className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs font-medium">
+                Featured
+              </span>
+            )}
           </div>
-          <div className="flex items-center gap-2">
-            <Eye className="w-4 h-4" />
-            <span>{blog.views} views</span>
-          </div>
-          {blog.isFeatured && (
-            <span className="px-2 py-1 bg-primary/10 text-primary rounded-md text-xs font-medium">
-              Featured
-            </span>
+
+          {/* Tags */}
+          {blog.tags && blog.tags.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2">
+              <Tag className="w-4 h-4 text-muted-foreground" />
+              {blog.tags.map((tag, index) => (
+                <span
+                  key={index}
+                  className="px-2 py-[1.5px] bg-primary/10 text-primary rounded-full text-sm"
+                >
+                  {tag}
+                </span>
+              ))}
+            </div>
           )}
         </div>
 
-        {/* Tags */}
-        {blog.tags && blog.tags.length > 0 && (
-          <div className="flex flex-wrap items-center gap-2 mt-4">
-            <Tag className="w-4 h-4 text-muted-foreground" />
-            {blog.tags.map((tag, index) => (
-              <span
-                key={index}
-                className="px-3 py-1 bg-secondary text-secondary-foreground rounded-full text-sm"
-              >
-                {tag}
-              </span>
-            ))}
-          </div>
-        )}
       </header>
 
       {/* Featured Image */}
-      {blog.images && blog.images.length > 0 && (
+      {/* {blog.images && blog.images.length > 0 && (
         <div className="mb-12 rounded-lg overflow-hidden h-[60vh]">
           <Image
             src={blog.images[0]}
@@ -90,7 +92,7 @@ const SingleBlogPage = async ({ params }: { params: { slug: string } }) => {
             priority
           />
         </div>
-      )}
+      )} */}
 
       {/* Content */}
       <div className="prose prose-lg dark:prose-invert max-w-none">

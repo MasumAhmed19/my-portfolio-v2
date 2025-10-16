@@ -1,32 +1,43 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
-import { Loader2, Plus, X} from "lucide-react";
+import { Card, CardContent } from "@/components/ui/card";
+import { Loader2, Plus, X } from "lucide-react";
 import RichTextEditor from "@/components/modules/Editor/RichTextEditor";
 import TagInput from "@/components/modules/Editor/TagInput";
 import { toast } from "sonner";
-import { createBlog } from "@/services/blogService";
+import { updateBlog } from "@/services/blogService";
+import { IBlog } from "@/types";
 
-export default function CreateBlogPage() {
+interface EditBlogFormProps {
+  blog: IBlog;
+}
+
+export default function EditBlogForm({ blog }: EditBlogFormProps) {
   const router = useRouter();
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [tags, setTags] = useState<string[]>([]);
-  const [images, setImages] = useState<string[]>([]);
+  const [title, setTitle] = useState(blog.title || "");
+  const [description, setDescription] = useState(blog.description || "");
+  const [tags, setTags] = useState<string[]>(blog.tags || []);
+  const [images, setImages] = useState<string[]>(blog.images || []);
   const [imageUrl, setImageUrl] = useState("");
   const [content, setContent] = useState<JSON | null>(null);
-  const [isFeatured, setIsFeatured] = useState(false);
+  const [isFeatured, setIsFeatured] = useState(blog.isFeatured || false);
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isContentLoaded, setIsContentLoaded] = useState(false);
+
+  // Load content after component mounts to avoid hydration issues
+  useEffect(() => {
+    if (blog.content && !isContentLoaded) {
+      setContent(blog.content);
+      setIsContentLoaded(true);
+    }
+  }, [blog.content, isContentLoaded]);
 
   const handleAddImage = () => {
     const trimmedUrl = imageUrl.trim();
@@ -75,18 +86,17 @@ export default function CreateBlogPage() {
         isFeatured,
       };
 
-      // console.log("Payload:", payload);
-
-      const response = await createBlog(payload);
+      const response = await updateBlog(blog.slug, payload);
 
       if (response) {
-        toast.success("Blog post created successfully!");
+        toast.success("Blog post updated successfully!");
         router.push("/dashboard/all-blogs");
+        router.refresh();
       }
     } catch (error: unknown) {
-      console.error("Failed to create post:", error);
+      console.error("Failed to update post:", error);
       toast.error(
-        (error as Error)?.message || "Failed to create blog post. Please try again."
+        (error as Error)?.message || "Failed to update blog post. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -197,11 +207,17 @@ export default function CreateBlogPage() {
             <Label className="text-base font-semibold">
               Content <span className="text-red-500">*</span>
             </Label>
-            <RichTextEditor
-              content={content ? JSON.stringify(content) : undefined}
-              onChange={(value) => setContent(value as JSON | null)}
-              placeholder="Start writing your amazing blog post..."
-            />
+            {isContentLoaded ? (
+              <RichTextEditor
+                content={content ? JSON.stringify(content) : undefined}
+                onChange={(value) => setContent(value as JSON | null)}
+                placeholder="Start writing your amazing blog post..."
+              />
+            ) : (
+              <div className="w-full h-[400px] border rounded-md flex items-center justify-center bg-muted/50">
+                <Loader2 className="h-8 w-8 animate-spin text-muted-foreground" />
+              </div>
+            )}
           </div>
 
           {/* Featured Toggle */}
@@ -231,10 +247,10 @@ export default function CreateBlogPage() {
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Publishing...
+                  Updating...
                 </>
               ) : (
-                "Publish Blog"
+                "Update Blog"
               )}
             </Button>
             <Button

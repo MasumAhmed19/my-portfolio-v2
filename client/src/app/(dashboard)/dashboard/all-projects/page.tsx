@@ -42,11 +42,11 @@ import {
   Github,
   ExternalLink,
   Video,
+  Link,
 } from "lucide-react";
 import { toast } from "sonner";
 import { IProject } from "@/types";
 import { deleteProject, getProjects } from "@/services/projectService";
-
 
 const AllProjectsPage = () => {
   const router = useRouter();
@@ -55,7 +55,7 @@ const AllProjectsPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteSlug, setDeleteSlug] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
-  
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -154,7 +154,9 @@ const AllProjectsPage = () => {
           ) : filteredProjects.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground">
-                {searchQuery ? "No projects found matching your search" : "No projects yet"}
+                {searchQuery
+                  ? "No projects found matching your search"
+                  : "No projects yet"}
               </p>
             </div>
           ) : (
@@ -165,52 +167,51 @@ const AllProjectsPage = () => {
                   <TableHeader>
                     <TableRow className="bg-muted/50">
                       <TableHead className="w-[2%]">No.</TableHead>
-                      <TableHead className="w-[35%]">Project</TableHead>
-                      <TableHead className="w-[15%]">Status</TableHead>
+                      <TableHead className="w-[25%]">Project</TableHead>
+                      <TableHead className="w-[35%]">Tags</TableHead>
                       <TableHead className="w-[15%]">Links</TableHead>
-                      <TableHead className="w-[15%]">Date</TableHead>
-                      <TableHead className="text-right w-[10%]">Actions</TableHead>
+                      <TableHead className="w-[13%]">Date</TableHead>
+                      <TableHead className="text-right w-[10%]">
+                        Actions
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {filteredProjects.map((project, index) => (
                       <TableRow key={project.id} className="hover:bg-muted/30">
-                        <TableCell>{index+1}</TableCell>
+                        <TableCell>{index + 1}</TableCell>
                         <TableCell>
                           <div className="space-y-1">
-                            <div className="font-medium line-clamp-1">{project.title}</div>
+                            <div className="font-medium line-clamp-1">
+                              {project.title}
+                            </div>
                             <div className="text-sm text-muted-foreground line-clamp-1 max-w-md">
                               {project.description}
                             </div>
-                            {project.tags.length > 0 && (
-                              <div className="flex gap-1 flex-wrap">
-                                {project.tags.slice(0, 3).map((tag) => (
-                                  <Badge key={tag} variant="secondary" className="text-xs">
-                                    {tag}
-                                  </Badge>
-                                ))}
-                                {project.tags.length > 3 && (
-                                  <Badge variant="secondary" className="text-xs">
-                                    +{project.tags.length - 3}
-                                  </Badge>
-                                )}
-                              </div>
-                            )}
                           </div>
                         </TableCell>
                         <TableCell>
                           <div className="flex flex-col gap-1">
-                            {project.isFeatured && (
-                              <Badge variant="default" className="gap-1 w-fit">
-                                <Star className="h-3 w-3" />
-                                Featured
-                              </Badge>
-                            )}
-                            {project.video && (
-                              <Badge variant="outline" className="gap-1 w-fit">
-                                <Video className="h-3 w-3" />
-                                Video
-                              </Badge>
+                            {project.tags.length > 0 && (
+                              <div className="flex gap-1 flex-wrap">
+                                {project.tags.slice(0, 3).map((tag) => (
+                                  <Badge
+                                    key={tag}
+                                    variant="secondary"
+                                    className="text-xs bg-primary/10 text-primary"
+                                  >
+                                    {tag}
+                                  </Badge>
+                                ))}
+                                {project.tags.length > 3 && (
+                                  <Badge
+                                    variant="secondary"
+                                    className="text-xs"
+                                  >
+                                    +{project.tags.length - 3}
+                                  </Badge>
+                                )}
+                              </div>
                             )}
                           </div>
                         </TableCell>
@@ -221,9 +222,9 @@ const AllProjectsPage = () => {
                                 href={project.liveLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-blue-600 hover:text-blue-800"
+                                className="text-primary hover:text-primary"
                               >
-                                <ExternalLink className="h-4 w-4" />
+                                <Link className="h-4 w-4" />
                               </a>
                             )}
                             {project.githubLink && (
@@ -231,7 +232,7 @@ const AllProjectsPage = () => {
                                 href={project.githubLink}
                                 target="_blank"
                                 rel="noopener noreferrer"
-                                className="text-gray-700 hover:text-gray-900"
+                                className="text-primary hover:text-primary"
                               >
                                 <Github className="h-4 w-4" />
                               </a>
@@ -249,6 +250,7 @@ const AllProjectsPage = () => {
                             <Button
                               variant="ghost"
                               size="icon"
+                              className="cursor-pointer"
                               onClick={() => handleEdit(project.slug)}
                             >
                               <Pencil className="h-4 w-4" />
@@ -256,6 +258,7 @@ const AllProjectsPage = () => {
                             <Button
                               variant="ghost"
                               size="icon"
+                              className="cursor-pointer"
                               onClick={() => setDeleteSlug(project.slug)}
                             >
                               <Trash2 className="h-4 w-4 text-destructive" />
@@ -278,7 +281,9 @@ const AllProjectsPage = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.max(1, prev - 1))
+                      }
                       disabled={currentPage === 1}
                     >
                       Previous
@@ -286,7 +291,9 @@ const AllProjectsPage = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                      }
                       disabled={currentPage === totalPages}
                     >
                       Next
@@ -305,7 +312,8 @@ const AllProjectsPage = () => {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the project.
+              This action cannot be undone. This will permanently delete the
+              project.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -313,7 +321,7 @@ const AllProjectsPage = () => {
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-destructive text-background hover:bg-destructive/90 cursor-pointer"
             >
               {isDeleting ? (
                 <>

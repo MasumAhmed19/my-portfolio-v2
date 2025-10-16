@@ -44,7 +44,6 @@ import { toast } from "sonner";
 import { IBlog } from "@/types";
 import { deleteBlog, getBlogs } from "@/services/blogService";
 
-
 const AllBlogPage = () => {
   const router = useRouter();
   const [blogs, setBlogs] = useState<IBlog[]>([]);
@@ -52,7 +51,7 @@ const AllBlogPage = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [deleteSlug, setDeleteSlug] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
-  
+
   // Pagination state
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
@@ -88,7 +87,7 @@ const AllBlogPage = () => {
       await deleteBlog(deleteSlug);
       toast.success("Blog deleted successfully");
       setDeleteSlug(null);
-      fetchBlogs(); // Refresh the list
+      fetchBlogs();
     } catch (error) {
       console.error("Failed to delete blog:", error);
       toast.error("Failed to delete blog");
@@ -119,7 +118,9 @@ const AllBlogPage = () => {
         <CardHeader>
           <div className="flex items-center justify-between">
             <div>
-              <CardTitle className="text-2xl font-bold">All Blog Posts</CardTitle>
+              <CardTitle className="text-2xl font-bold">
+                All Blog Posts
+              </CardTitle>
               <CardDescription>
                 Manage and organize your blog posts ({total} total)
               </CardDescription>
@@ -151,7 +152,9 @@ const AllBlogPage = () => {
           ) : filteredBlogs.length === 0 ? (
             <div className="text-center py-12">
               <p className="text-muted-foreground">
-                {searchQuery ? "No blogs found matching your search" : "No blog posts yet"}
+                {searchQuery
+                  ? "No blogs found matching your search"
+                  : "No blog posts yet"}
               </p>
             </div>
           ) : (
@@ -166,16 +169,22 @@ const AllBlogPage = () => {
                       <TableHead className="w-[15%]">Status</TableHead>
                       <TableHead className="w-[15%]">Views</TableHead>
                       <TableHead className="w-[15%]">Date</TableHead>
-                      <TableHead className="text-right w-[10%]">Actions</TableHead>
+                      <TableHead className="text-right w-[10%]">
+                        Actions
+                      </TableHead>
                     </TableRow>
                   </TableHeader>
                   <TableBody>
                     {filteredBlogs.map((blog, index) => (
                       <TableRow key={blog.id} className="hover:bg-muted/30">
-                        <TableCell>{limit*(currentPage-1)+ index+1}</TableCell>
+                        <TableCell>
+                          {limit * (currentPage - 1) + index + 1}
+                        </TableCell>
                         <TableCell>
                           <div className="space-y-1">
-                            <div className="font-medium line-clamp-1">{blog.title}</div>
+                            <div className="font-medium line-clamp-1">
+                              {blog.title}
+                            </div>
                             {/* {blog.tags.length > 0 && (
                               <div className="flex gap-1 flex-wrap">
                                 {blog.tags.slice(0, 3).map((tag) => (
@@ -202,8 +211,15 @@ const AllBlogPage = () => {
                         </TableCell>
                         <TableCell>
                           <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                            <Eye className="h-4 w-4" />
-                            {blog.views}
+                            <a
+                              href={`/blogs/${blog.slug}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="flex items-center gap-1 text-sm text-muted-foreground"
+                            >
+                              <Eye className="h-4 w-4" />
+                              {blog.views}
+                            </a>
                           </div>
                         </TableCell>
                         <TableCell>
@@ -217,6 +233,7 @@ const AllBlogPage = () => {
                             <Button
                               variant="ghost"
                               size="icon"
+                              className="cursor-pointer"
                               onClick={() => handleEdit(blog.slug)}
                             >
                               <Pencil className="h-4 w-4" />
@@ -225,6 +242,7 @@ const AllBlogPage = () => {
                               variant="ghost"
                               size="icon"
                               onClick={() => setDeleteSlug(blog.slug)}
+                              className="cursor-pointer"
                             >
                               <Trash2 className="h-4 w-4 text-destructive" />
                             </Button>
@@ -246,7 +264,9 @@ const AllBlogPage = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setCurrentPage((prev) => Math.max(1, prev - 1))}
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.max(1, prev - 1))
+                      }
                       disabled={currentPage === 1}
                     >
                       Previous
@@ -254,7 +274,9 @@ const AllBlogPage = () => {
                     <Button
                       variant="outline"
                       size="sm"
-                      onClick={() => setCurrentPage((prev) => Math.min(totalPages, prev + 1))}
+                      onClick={() =>
+                        setCurrentPage((prev) => Math.min(totalPages, prev + 1))
+                      }
                       disabled={currentPage === totalPages}
                     >
                       Next
@@ -273,7 +295,8 @@ const AllBlogPage = () => {
           <AlertDialogHeader>
             <AlertDialogTitle>Are you sure?</AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone. This will permanently delete the blog post.
+              This action cannot be undone. This will permanently delete the
+              blog post.
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
@@ -281,7 +304,7 @@ const AllBlogPage = () => {
             <AlertDialogAction
               onClick={handleDelete}
               disabled={isDeleting}
-              className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
+              className="bg-destructive text-background hover:bg-destructive/90 cursor-pointer"
             >
               {isDeleting ? (
                 <>

@@ -2,32 +2,34 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import Image from "next/image";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Switch } from "@/components/ui/switch";
-import {
-  Card,
-  CardContent,
-} from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Loader2, Plus, X, Link2, Github, Video } from "lucide-react";
 import { toast } from "sonner";
-import { createProject } from "@/services/projectService";
+import { updateProject } from "@/services/projectService";
 import TagInput from "@/components/modules/Editor/TagInput";
+import { IProject } from "@/types";
 
+interface EditProjectFormProps {
+  project: IProject;
+}
 
-export default function CreateProject() {
+export default function EditProjectForm({ project }: EditProjectFormProps) {
   const router = useRouter();
   const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    tags: [] as string[],
-    images: [] as string[],
-    video: "",
-    liveLink: "",
-    githubLink: "",
-    isFeatured: false,
+    title: project.title || "",
+    description: project.description || "",
+    tags: project.tags || [],
+    images: project.images || [],
+    video: project.video || "",
+    liveLink: project.liveLink || "",
+    githubLink: project.githubLink || "",
+    isFeatured: project.isFeatured || false,
   });
   const [imageUrl, setImageUrl] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -87,18 +89,17 @@ export default function CreateProject() {
         isFeatured: formData.isFeatured,
       };
 
-      console.log("Payload:", payload);
-
-      const response = await createProject(payload);
+      const response = await updateProject(project.slug, payload);
 
       if (response) {
-        toast.success("Project created successfully!");
+        toast.success("Project updated successfully!");
         router.push("/dashboard/all-projects");
+        router.refresh();
       }
     } catch (error: unknown) {
-      console.error("Failed to create project:", error);
+      console.error("Failed to update project:", error);
       toast.error(
-        (error as Error)?.message || "Failed to create project. Please try again."
+        (error as Error)?.message || "Failed to update project. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -108,7 +109,6 @@ export default function CreateProject() {
   return (
     <div className="px-5">
       <Card className="border-none shadow-none">
-
         <CardContent className="space-y-6">
           {/* Title */}
           <div className="space-y-2">
@@ -185,13 +185,15 @@ export default function CreateProject() {
                 {formData.images.map((image, idx) => (
                   <div key={idx} className="relative group">
                     <div className="aspect-video relative overflow-hidden rounded-lg border bg-muted">
-                      <img
+                      <Image
                         src={image}
                         alt={`Project ${idx + 1}`}
-                        className="w-full h-full object-cover"
+                        fill
+                        className="object-cover"
+                        sizes="(max-width: 768px) 50vw, 33vw"
                         onError={(e) => {
-                          e.currentTarget.src =
-                            "https://via.placeholder.com/400x300?text=Invalid+Image";
+                          const target = e.target as HTMLImageElement;
+                          target.src = "https://via.placeholder.com/400x300?text=Invalid+Image";
                         }}
                       />
                     </div>
@@ -313,10 +315,10 @@ export default function CreateProject() {
               {isSubmitting ? (
                 <>
                   <Loader2 className="mr-2 h-4 w-4 animate-spin" />
-                  Creating...
+                  Updating...
                 </>
               ) : (
-                "Create Project"
+                "Update Project"
               )}
             </Button>
             <Button
