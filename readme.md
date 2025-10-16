@@ -1,7 +1,7 @@
 # Masum's Portfolio
 
 A full-stack **Next.js + Express** web application featuring a secure admin dashboard protected by **JWT / NextAuth** authentication.  
-Deployed at **[masum-a-shanto.vercel.app](https://masum-a-shanto.vercel.app/)**.
+Deployed at **[masum-a-shanto.vercel.app](https://masum-a-shanto.vercel.app/)**
 
 ---
 
@@ -25,7 +25,7 @@ my-portfolio-v2/
 | Layer | Technology |
 |-------|-------------|
 | Frontend | Next.js (App Router), TypeScript, NextAuth, Axios |
-| Backend | Express.js, TypeScript, JWT, CORS |
+| Backend | Express.js, Prisma, TypeScript, JWT, CORS |
 | Auth | JWT + optional NextAuth credentials provider |
 | Deployment | Vercel (client) + Node/Express (server) |
 
@@ -167,13 +167,6 @@ Server → `http://localhost:9000/api/v1`
 
 ---
 
-## 📄 License
-
-MIT © 2025 Masum Ahmed
-
-````
-
----
 
 ## ⚙️ 3. Server — `server/README.md`
 
@@ -301,14 +294,3 @@ Server available at → `http://localhost:9000/api/v1`
 
 ---
 
-## 📄 License
-
-MIT © 2025 Masum Ahmed
-
-```
-
----
-
-Would you like me to **generate these as actual `.md` files** (and package them into a ZIP for download)?  
-That way you can drop them straight into your `/`, `/client`, and `/server` directories.
-```
