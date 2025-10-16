@@ -7,7 +7,7 @@ import httpStatus from "http-status-codes";
 const createProject = async (
   payload: Prisma.ProjectsCreateInput
 ): Promise<Projects> => {
-  const { title, slug, tags, ...rest } = payload;
+  const { title, slug, tags, author, ...rest } = payload;
   let generatedSlug = generateSlug(title);
   let count = 0;
   let uniqueSlug = generatedSlug;
@@ -27,6 +27,12 @@ const createProject = async (
       slug: uniqueSlug,
       tags: normalizedTags,
       ...rest,
+      author: {
+        connect: {
+          id: 1
+        }
+      }
+
     },
     include: {
       author: {

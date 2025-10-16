@@ -5,10 +5,11 @@ import {
 import React from "react";
 import { ExternalLink, Github } from "lucide-react";
 import VideoPlayer from "@/components/shared/VideoPlayer";
+import Image from "next/image";
 
 export async function generateStaticParams() {
   const slugs = await getAllProjectSlugs();
-  console.log(slugs)
+  // console.log(slugs)
   return slugs.map((slug) => ({ slug }));
 }
 
@@ -41,23 +42,30 @@ export default async function SingleProjectPage({
           {project.description}
         </p>
 
-        {project.video ? (
-          <VideoPlayer
-            src={project.video}
-            autoPlay
-            loop
-            muted
-            playbackRate={1.25}
-            className="w-full h-auto rounded-lg shadow-lg"
-            disableFallback
-          />
-        ) : (
-          <img
-            src={project.images?.[0]}
-            alt={project.title}
-            className="w-full rounded-2xl shadow-md mb-8"
-          />
-        )}
+      {project.video ? (
+        <VideoPlayer
+          src={project.video}
+          autoPlay
+          loop
+          muted
+          playbackRate={1.25}
+          className="w-full h-auto rounded-lg shadow-lg"
+          disableFallback
+        />
+      ) : (
+        project.images && project.images.length > 0 && (
+          <div className="mb-12 rounded-lg overflow-hidden h-[60vh]">
+            <Image
+              src={project.images[0]}
+              alt={project.title}
+              width={800}
+              height={350}
+              className="w-full h-full object-cover object-center"
+              priority
+            />
+          </div>
+        )
+      )}
 
         {/* Tags */}
         <div className="flex flex-wrap gap-2 mb-12 mt-10">
@@ -74,7 +82,7 @@ export default async function SingleProjectPage({
         {/* Links */}
         <div className="flex flex-wrap gap-4 mb-16">
           <a
-            href={project?.liveLink!}
+            href={project.liveLink!}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-2.5 bg-primary text-background rounded-full text-sm"
@@ -83,7 +91,7 @@ export default async function SingleProjectPage({
             Live Demo
           </a>
           <a
-            href={project?.githubLink!}
+            href={project.githubLink!}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-5 py-2.5 border border-foreground rounded-full text-sm text-foreground hover:bg-primary hover:border-primary hover:text-background  transition"
