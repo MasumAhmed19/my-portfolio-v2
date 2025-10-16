@@ -48,30 +48,6 @@ export function LoginForm({
     },
   });
 
-  // const onSubmit = async (values: z.infer<typeof formSchema>) => {
-  //   setLoading(true);
-  //   try {
-  //     const response = await loginAdmin(values);
-
-  //     if (response?.data?.accessToken) {
-  //       toast.success("Login successful!");
-
-  //       // Optionally fetch user info
-  //       const user = await getMe();
-  //       console.log("Logged-in admin:", user);
-
-  //       // Redirect to admin dashboard
-  //       router.push("/dashboard");
-  //     } else {
-  //       toast.error("Login failed. Please check your credentials.");
-  //     }
-  //   } catch (error: any) {
-  //     toast.error(error?.message || "Something went wrong!");
-  //     console.error(error);
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
 
   const onSubmit = async (values: z.infer<typeof formSchema>) => {
     setLoading(true);

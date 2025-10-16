@@ -10,12 +10,8 @@ import { Switch } from "@/components/ui/switch";
 import {
   Card,
   CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
 } from "@/components/ui/card";
-import { Loader2, Plus, X, ImageIcon } from "lucide-react";
-import axios from "axios";
+import { Loader2, Plus, X} from "lucide-react";
 import RichTextEditor from "@/components/modules/Editor/RichTextEditor";
 import TagInput from "@/components/modules/Editor/TagInput";
 import { toast } from "sonner";
@@ -28,7 +24,7 @@ export default function CreateBlogPage() {
   const [tags, setTags] = useState<string[]>([]);
   const [images, setImages] = useState<string[]>([]);
   const [imageUrl, setImageUrl] = useState("");
-  const [content, setContent] = useState<any>(null);
+  const [content, setContent] = useState<JSON | null>(null);
   const [isFeatured, setIsFeatured] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -87,10 +83,10 @@ export default function CreateBlogPage() {
         toast.success("Blog post created successfully!");
         router.push("/dashboard/all-blogs");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Failed to create post:", error);
       toast.error(
-        error?.message || "Failed to create blog post. Please try again."
+        (error as Error)?.message || "Failed to create blog post. Please try again."
       );
     } finally {
       setIsSubmitting(false);
@@ -202,8 +198,8 @@ export default function CreateBlogPage() {
               Content <span className="text-red-500">*</span>
             </Label>
             <RichTextEditor
-              content={content}
-              onChange={setContent}
+              content={content ? JSON.stringify(content) : undefined}
+              onChange={(value) => setContent(value as JSON | null)}
               placeholder="Start writing your amazing blog post..."
             />
           </div>

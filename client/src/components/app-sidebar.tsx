@@ -179,7 +179,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             >
               <Link href="/dashboard">
                 <span className="text-base font-semibold">
-                  Masum's Dashboard
+                  Masums Dashboard
                 </span>
               </Link>
             </SidebarMenuButton>

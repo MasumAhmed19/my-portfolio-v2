@@ -98,10 +98,10 @@ export default function CreateProject() {
         toast.success("Project created successfully!");
         router.push("/dashboard/all-projects");
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       console.error("Failed to create project:", error);
       toast.error(
-        error?.message || "Failed to create project. Please try again."
+        (error as Error)?.message || "Failed to create project. Please try again."
       );
     } finally {
       setIsSubmitting(false);

@@ -9,7 +9,7 @@ import MenuBar from "./MenuBar";
 
 interface RichTextEditorProps {
   content?: string;
-  onChange?: (content: any) => void;
+  onChange?: (content: unknown) => void;
   placeholder?: string;
 }
 

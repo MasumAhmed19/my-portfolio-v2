@@ -1,12 +1,18 @@
-import NextAuth from "next-auth";
+import NextAuth, { User } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import axios from "axios";
 
 declare module "next-auth" {
   interface User {
+    id?: string;
+    name?: string | null;
+    email?: string | null;
+    role?: string;
     accessToken?: string;
   }
+
   interface Session {
+    user?: User;
     accessToken?: string;
   }
 }
@@ -14,7 +20,7 @@ declare module "next-auth" {
 declare module "next-auth/jwt" {
   interface JWT {
     accessToken?: string;
-    user?: any;
+    user?: User;
   }
 }
 
@@ -43,6 +49,7 @@ const handler = NextAuth({
 
           if (token && user) {
             return {
+              id: data.data.user.id || data.data.user.email,
               accessToken: token,
               name: data.data.user.name,
               email: data.data.user.email,
@@ -81,7 +88,7 @@ const handler = NextAuth({
   },
 
   pages: {
-    signIn: "/login",
+    signIn: "/admin-login",
   },
 
   secret: process.env.NEXTAUTH_SECRET,
