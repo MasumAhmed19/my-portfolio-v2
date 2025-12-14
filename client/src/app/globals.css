@@ -6,6 +6,7 @@
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-codeBackgournd: var(--codeBackgournd);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --color-sidebar-ring: var(--sidebar-ring);
@@ -47,6 +48,7 @@
   --radius: 0.65rem;
   --background: oklch(1 0 0);
   --foreground: oklch(0.141 0.005 285.823);
+  --codeBackgournd: oklch(0.9826 0.0017 67.8);
   --card: oklch(1 0 0);
   --card-foreground: oklch(0.141 0.005 285.823);
   --popover: oklch(1 0 0);
@@ -81,6 +83,7 @@
 .dark {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.985 0 0);
+  --codeBackgournd: oklch(0.288 0.0054 106.73);
   --card: oklch(0.21 0.006 285.885);
   --card-foreground: oklch(0.985 0 0);
   --popover: oklch(0.21 0.006 285.885);
@@ -247,3 +250,26 @@
 .ProseMirror a:hover {
   color: #1d4ed8;
 }
+
+
+/* Syntax Highlighting for Code Blocks (Light + Dark Mode) */
+@import "highlight.js/styles/github.css";
+
+@media (prefers-color-scheme: dark) {
+  @import "highlight.js/styles/github-dark.css";
+}
+
+/* Extra formatting for <pre><code> blocks */
+.ProseMirror pre {
+  background-color: var(--color-codeBackgournd);
+  color: var(--color-foreground);
+  padding: 1.5rem;
+  border-radius: var(--radius-md);
+  overflow-x: auto;
+}
+
+.ProseMirror pre code {
+  font-family: "Fira Code", monospace;
+  font-size: 0.8rem;
+}
+
